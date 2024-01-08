@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 456564}
   - component: {fileID: 3374252}
   - component: {fileID: 2337170}
-  - component: {fileID: 13512446}
+  - component: {fileID: 1104648095273677697}
   m_Layer: 0
   m_Name: Mushroom13
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &13512446
-SphereCollider:
+--- !u!136 &1104648095273677697
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,6 +102,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.2960732
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5921464
+  m_Direction: 1
   m_Center: {x: 0, y: 1.2960732, z: 0}
