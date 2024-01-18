@@ -2,6 +2,7 @@ using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Transactions;
+using Unity.VisualScripting;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
@@ -108,7 +109,6 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         float randomX = Random.Range(-walkPointRange, walkPointRange);
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
-
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
         if(Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
@@ -165,13 +165,9 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         Destroy(gameObject);
         Debug.Log("Enemy Died");
-        for (var i = 0; i < 3; i++)
-        { 
-            float ranX = Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f);
-            float ranZ = Random.Range(transform.position.z - 0.5f, transform.position.z + 0.5f);
-            Rigidbody rb = Instantiate(fruitDrop, new Vector3(ranX, transform.position.y + 1f, ranZ) , Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.up *5f, ForceMode.Force);
-        }
+        Rigidbody rb = Instantiate(fruitDrop, transform.position + new Vector3(0f, 1f, 0f) , Quaternion.identity).GetComponent<Rigidbody>();
+        //Rigidbody rb = Instantiate(fruitDrop, transform.position + new Vector3(0.0f, 1.0f, 0.0f) , Quaternion.identity).GetComponent<Rigidbody>();
+        rb.AddForce(transform.up *5f, ForceMode.Force);
     }
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;

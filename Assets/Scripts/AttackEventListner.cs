@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class AttackEventListner : MonoBehaviour
 {
-    [SerializeField] AttackManagerScript attackManager;
+    //[SerializeField] AttackManagerScript attackManager;
     [Header("Weapon")]
-    [SerializeField] GameObject weaponObj;
+    [SerializeField] private GameObject weaponObj;
     BoxCollider weaponCollider;
 
     private void Start() {
+        //weaponObj = GameObject.Find();
         weaponCollider = weaponObj.GetComponent<BoxCollider>();
         weaponCollider.enabled = false;
     }

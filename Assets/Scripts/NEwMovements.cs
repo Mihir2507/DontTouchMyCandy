@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NEwMovements : MonoBehaviour, IDamagable
-{
+public class NEwMovements : MonoBehaviour, IDamagable, IShopCustomer {
     [Header("Movements")]
     [SerializeField]float moveSpeed;
     float attackMoveSpeed;
@@ -40,19 +39,31 @@ public class NEwMovements : MonoBehaviour, IDamagable
     private bool readyToJump;
     public bool isJumping;
 
+    [Header("Money")]
+    [SerializeField] private CherriesCollision cherriesCollisionScript;
+    private int availableMoney;
+    [Header("Weapons")]
+     Dictionary<string, GameObject> weaponDict = new Dictionary<string, GameObject>();
+    [SerializeField] private GameObject currentSword;
+    [SerializeField] private GameObject swaySword;
+    [SerializeField] private GameObject champSword;
+    [SerializeField] private GameObject currentShield;
+    [SerializeField] private GameObject crudeShield;
+    [SerializeField] private GameObject nailShield;
+    [SerializeField] private GameObject champShield;
+
     [Header("Health")]
     [SerializeField]private HealthBarScript healthScript;
-    [SerializeField] int maxHealth;
-    [SerializeField] int currentHealth;
-    int damage;
+    [SerializeField] private int maxHealth;
+    [SerializeField] private int currentHealth;
+    private int damage;
     //[SerializeField] KeyCode jumpKeys = KeyCode.Space;
     [SerializeField]Transform orientation;
 
     
-    float horizontalInput;
-    float verticalInput;
-
-    Vector3 moveDir;
+    private float horizontalInput;
+    private float verticalInput;
+    private Vector3 moveDir;
 
     Rigidbody rb;
 
@@ -73,9 +84,27 @@ public class NEwMovements : MonoBehaviour, IDamagable
         maxHealth = 100;
         currentHealth = maxHealth;
         healthScript.SetMaxHealth(maxHealth);
-        damage = 5;     
+        damage = 2;
+        AddToDict();
     }
 
+    public void AddToDict(){
+        // Dictionary<int, GameObject> weaponDict = new Dictionary<int, GameObject>
+        // {
+        //     { 1, swaySword },
+        //     { 2, champSword },
+        //     { 3, crudeShield },
+        //     { 4, nailShield },
+        //     { 5, champShield }
+        // };
+        weaponDict.Add("CURRENT SWORD", currentSword);
+        weaponDict.Add("SWAY SWORD", swaySword);
+        weaponDict.Add("CHAMP SWORD", champSword);
+        weaponDict.Add("SHIELD CRUDE", crudeShield);
+        weaponDict.Add("SHIELD NAIL", nailShield);
+        weaponDict.Add("SHIELD CHAMP", champShield);
+        weaponDict.Add("SHIELD CURRENT", currentShield);
+    }
     private void Update() {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f , whatIsGround);
@@ -227,6 +256,64 @@ public class NEwMovements : MonoBehaviour, IDamagable
         healthScript.SetHealth(currentHealth);
         if(currentHealth <=0){
             Debug.Log("Player Died");
+        }
+    }
+
+    // Buying Items From Shop
+    public void BoughtItem(Items.ItemType itemType, string itemName){
+        Debug.Log("Bought Item :" + itemType);
+        // switch(weaponDict){
+        //     default:
+        //     case ():
+        //         swaySword.SetActive(true);
+        //         break;
+        // }
+        if(weaponDict.ContainsKey(itemName)){//(weaponDict.TryGetValue(itemName, out swaySword)){
+            switch(itemName){
+                default:
+                case "SWAY SWORD":
+                    currentSword.SetActive(false);
+                    swaySword.SetActive(true);
+                    currentSword = swaySword;
+                    break;
+                case "CHAMP SWORD":
+                    currentSword.SetActive(false);
+                    champSword.SetActive(true);
+                    currentSword = champSword;
+                    break;
+                case "SHIELD CRUDE":
+                    currentShield.SetActive(false);
+                    crudeShield.SetActive(true);
+                    Debug.Log("shield bought");
+                    currentShield = crudeShield;
+                    break;
+                case "SHIELD NAIL":
+                    currentShield.SetActive(false);
+                    nailShield.SetActive(true);
+                    currentShield = nailShield;
+                    break;
+                case "SHIELD CHAMP":
+                    currentShield.SetActive(false);
+                    champShield.SetActive(true);
+                    currentShield = champShield;
+                    break;
+            }
+            //swaySword.SetActive(true);
+        }
+    }
+
+    public bool TryToSpendMoney(int itemMoneyAmount){
+        // CherriesCollision cherriesCollisionScript = new CherriesCollision();
+        availableMoney = cherriesCollisionScript.cherries;
+        if(availableMoney >= itemMoneyAmount){
+            Debug.Log("You can buy the item");
+            //cherriesCollisionScript.cherries -= itemMoneyAmount;
+            cherriesCollisionScript.OnItemBuy(availableMoney - itemMoneyAmount);
+            return true;
+        }
+        else{
+            Debug.Log("You dont have enough money");
+            return false;
         }
     }
 }

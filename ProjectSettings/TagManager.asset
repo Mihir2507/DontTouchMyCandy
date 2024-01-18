@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Stones
+  - cherries
   layers:
   - Default
   - TransparentFX

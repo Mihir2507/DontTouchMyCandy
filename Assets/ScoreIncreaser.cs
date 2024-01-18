@@ -9,15 +9,16 @@ public class ScoreIncreaser : MonoBehaviour
     int score = 0;
 
     private void OnTriggerEnter(Collider other) {
-        if(other.tag == "Player"){
+        if(other.transform.tag == "Player"){
             score++;
+            Debug.Log(score);
             //scoreText.text = score.ToString();
-            Invoke("DestroyObject", 0.5f);
+            Destroy(gameObject);
         }
     }
 
-    private void DestroyObject(){
-        Destroy(gameObject);
-        Debug.Log(score);
-    }
+    // private void DestroyObject(){
+    //     Destroy(gameObject);
+    //     Debug.Log(score);
+    // }
 }

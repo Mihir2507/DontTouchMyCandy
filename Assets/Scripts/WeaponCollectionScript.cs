@@ -12,15 +12,17 @@ public class WeaponCollectionScript : MonoBehaviour
     // }
     private void OnTriggerEnter(Collider other) {
         anim.SetBool("IsCollected", true);
-       
-        Invoke("DestroyObject", 2);
-
-    }
-    private void DestroyObject()
-    {
         Destroy(gameObject);
         playerBasicSword.SetActive(true);
+       
+        // Invoke("DestroyObject", 1);
+
     }
+    // private void DestroyObject()
+    // {
+    //     Destroy(gameObject);
+    //     playerBasicSword.SetActive(true);
+    // }
     // private void SetPlayerSwordActive()
     // {
     //     playerBasicSword.SetActive(true);
