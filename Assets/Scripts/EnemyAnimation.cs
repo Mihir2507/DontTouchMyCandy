@@ -43,6 +43,9 @@ public class EnemyAnimation : MonoBehaviour
         }
         else{
             anim.SetBool("IsAttacking", false);
+            if(!enemyScript.isChasing){
+                anim.SetBool("IsChasing", false);
+            }   
         }
     }
 }

@@ -74,11 +74,14 @@ public class Enemy : MonoBehaviour, IDamagable
         if(!playerInSightRange && !playerInAttackRange){ 
             // Pateroling();
             isChasing = false;
+            agent.SetDestination(transform.position);
+
         }
         else if(playerInSightRange && !playerInAttackRange){ 
             ChasePlayer();
         }
         else if(playerInSightRange && playerInAttackRange){ 
+            Debug.Log("Player in attack sight");
             AttackPlayer();
         }
     }
@@ -157,13 +160,15 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         currentHealth -= damage;
         healthScript.SetHealth(currentHealth);
-        if(currentHealth<=0){
+        if(currentHealth<=0)
+        {
             KillEnemy();
         }
     }
     private void KillEnemy()
     {
-        Destroy(gameObject);
+        // Destroy(gameObject);
+        gameObject.SetActive(false);
         Debug.Log("Enemy Died");
         Rigidbody rb = Instantiate(fruitDrop, transform.position + new Vector3(0f, 1f, 0f) , Quaternion.identity).GetComponent<Rigidbody>();
         //Rigidbody rb = Instantiate(fruitDrop, transform.position + new Vector3(0.0f, 1.0f, 0.0f) , Quaternion.identity).GetComponent<Rigidbody>();

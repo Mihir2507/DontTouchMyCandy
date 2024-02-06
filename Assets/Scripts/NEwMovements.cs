@@ -19,7 +19,7 @@ public class NEwMovements : MonoBehaviour, IDamagable, IShopCustomer {
     // [Header("Slope Check")]
     // [SerializeField] float maxSlopeAngle;
     // [SerializeField] RaycastHit slopeHit; 
-    [SerializeField] float downVelocity;
+    // [SerializeField] float downVelocity;
     [Header("Enemy Check")]
     [SerializeField] LayerMask whatIsEnemy;
     [SerializeField] float attackRange;
@@ -30,7 +30,7 @@ public class NEwMovements : MonoBehaviour, IDamagable, IShopCustomer {
     public bool isAttacking;
     private bool readyToAttack;
     private bool freezeMotionOnAttacking;
-    [SerializeField] GameObject enemyObj;
+    // [SerializeField] GameObject enemyObj;
     public bool grounded; 
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCoolDown;
@@ -43,7 +43,7 @@ public class NEwMovements : MonoBehaviour, IDamagable, IShopCustomer {
     [SerializeField] private CherriesCollision cherriesCollisionScript;
     private int availableMoney;
     [Header("Weapons")]
-     Dictionary<string, GameObject> weaponDict = new Dictionary<string, GameObject>();
+    Dictionary<string, GameObject> weaponDict = new Dictionary<string, GameObject>();
     [SerializeField] private GameObject currentSword;
     [SerializeField] private GameObject swaySword;
     [SerializeField] private GameObject champSword;
@@ -110,6 +110,12 @@ public class NEwMovements : MonoBehaviour, IDamagable, IShopCustomer {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f , whatIsGround);
         enemyInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsEnemy);
         enemyInSightRange = Physics.CheckSphere(transform.position, SightRange, whatIsEnemy);
+        // if(!grounded){
+        //     Debug.Log("not grounded"+transform.position.y);
+        // }
+        // else{
+        //     Debug.Log(transform.position.y);
+        // }
 
         MyInput();
         SpeedControl();
@@ -240,7 +246,7 @@ public class NEwMovements : MonoBehaviour, IDamagable, IShopCustomer {
         freezeMotionOnAttacking = false;
         isAttacking = false;
         readyToAttack = true;
-        Debug.Log(isAttacking);
+        // Debug.Log(isAttacking);
     }
     private void OnDrawGizmosSelected() {
         Vector3 gizmosPosition = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
@@ -262,12 +268,6 @@ public class NEwMovements : MonoBehaviour, IDamagable, IShopCustomer {
     // Buying Items From Shop
     public void BoughtItem(Items.ItemType itemType, string itemName){
         Debug.Log("Bought Item :" + itemType);
-        // switch(weaponDict){
-        //     default:
-        //     case ():
-        //         swaySword.SetActive(true);
-        //         break;
-        // }
         if(weaponDict.ContainsKey(itemName)){//(weaponDict.TryGetValue(itemName, out swaySword)){
             switch(itemName){
                 default:
